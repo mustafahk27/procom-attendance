@@ -13,7 +13,7 @@ const AttendanceForm = () => {
   return (
     <div className="attendance-container">
       <div className="form-section">
-        <img src="/procom-logo.jpeg" alt="Procom" className="logo" />
+        <img src="/procom25logo.png" alt="Procom 25" className="logo" />
         <h1>MARK ATTENDANCE</h1>
         <form onSubmit={handleSubmit}>
           <input
