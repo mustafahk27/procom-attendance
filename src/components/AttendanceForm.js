@@ -6,7 +6,7 @@ const AttendanceForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Add your submission logic here
+
     console.log('Submitted code:', code);
   };
 
