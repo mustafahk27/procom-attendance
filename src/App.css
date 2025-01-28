@@ -44,3 +44,30 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-links {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.nav-links a {
+  color: #1e88e5;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.nav-links a:hover {
+  background: #1e88e5;
+  color: white;
+  transform: translateY(-1px);
+}
