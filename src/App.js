@@ -5,7 +5,7 @@ import BackupAttendanceForm from './components/BackupAttendanceForm';
 import './App.css';
 
 // Unique hashed endpoint for backup form
-const BACKUP_HASH = "8f3da5b1e6c4d2a9"; // This is just an example hash
+const BACKUP_HASH = "8f3da5b1e6c4d2a9"; 
 
 function App() {
   return (
