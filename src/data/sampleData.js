@@ -1,4 +1,4 @@
-export const competitionData = [
+let competitionDataStore = [
   {
     "_id": "67a27a48e26ae194dfac849a",
     "title": "Hackathon 2025",
@@ -31,4 +31,11 @@ export const competitionData = [
       }
     ]
   }
-]; 
+];
+
+export const getCompetitionData = () => competitionDataStore;
+
+export const updateCompetitionData = (newData) => {
+  competitionDataStore = newData;
+  return competitionDataStore;
+}; 

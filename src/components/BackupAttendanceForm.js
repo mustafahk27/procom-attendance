@@ -1,30 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './BackupAttendanceForm.css';
-import { competitionData } from '../data/sampleData';
+import { getCompetitionData, updateCompetitionData } from '../data/sampleData';
 
 const BackupAttendanceForm = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCompetition, setSelectedCompetition] = useState(competitionData[0]);
+  const [selectedCompetition, setSelectedCompetition] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  useEffect(() => {
+    const data = getCompetitionData();
+    setSelectedCompetition(data[0]);
+  }, []);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredTeams = selectedCompetition.registeredTeams.filter(team =>
+  const filteredTeams = selectedCompetition?.registeredTeams.filter(team =>
     team.team_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     team.team_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
     team.member.some(m => m.name.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  ) || [];
 
   const handleTeamSelect = (team) => {
     setSelectedTeam(team);
   };
 
   const handleAttendanceToggle = (team) => {
-    team.is_present = !team.is_present;
-    setSelectedCompetition({...selectedCompetition});
+    const updatedCompetition = {
+      ...selectedCompetition,
+      registeredTeams: selectedCompetition.registeredTeams.map(t => 
+        t.team_code === team.team_code ? { ...t, is_present: !t.is_present } : t
+      )
+    };
+    setSelectedCompetition(updatedCompetition);
+    setHasChanges(true);
   };
+
+  const handleSave = () => {
+    const allData = getCompetitionData();
+    const updatedData = allData.map(comp => 
+      comp._id === selectedCompetition._id ? selectedCompetition : comp
+    );
+    updateCompetitionData(updatedData);
+    console.log('Updated Data:', getCompetitionData());
+    setHasChanges(false);
+    alert('Attendance changes saved successfully!');
+  };
+
+  if (!selectedCompetition) return null;
 
   return (
     <div className="attendance-container">
@@ -69,6 +94,14 @@ const BackupAttendanceForm = () => {
             ))}
           </div>
         </div>
+
+        {hasChanges && (
+          <div className="save-button-container">
+            <button onClick={handleSave} className="save-button">
+              SAVE CHANGES
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="help-button">
